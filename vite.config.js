@@ -13,7 +13,7 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
   return {
-    base: './',
+    base: '/3d-shop/',
     plugins: [
       vue(),
       AutoImport({
