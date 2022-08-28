@@ -11,7 +11,7 @@ const routes = [
     // path: '/3d-shop-pages',
     path: '/',
     component: Layout,
-    redirect: 'home',
+    // redirect: 'home',
     children: [
       {
         path: 'home',
