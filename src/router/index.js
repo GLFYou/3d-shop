@@ -1,21 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
-const Layout = () => import('@/views/layout.vue')
-const Home = () => import('@/views/home/index.vue')
-const ShowArea = () => import('@/views/show-area/index.vue')
+// const Layout = () => import('@/views/layout.vue')
+// const Home = () => import('@/views/home/index.vue')
+// const ShowArea = () => import('@/views/show-area/index.vue')
+import Layout from '@/views/layout.vue'
+import Home from '@/views/home/index.vue'
+import ShowArea from '@/views/show-area/index.vue'
 
 const routes = [
   {
     // path: '/3d-shop-pages',
     path: '/',
     component: Layout,
-    redirect: '/home',
+    redirect: 'home',
     children: [
       {
-        path: '/home',
+        path: 'home',
         component: Home
       },
       {
-        path: '/show-area',
+        path: 'show-area',
         component: ShowArea
       }
     ]
