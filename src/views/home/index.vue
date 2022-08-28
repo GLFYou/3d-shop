@@ -48,7 +48,7 @@ const emitBgc = (val) => {
 }
 
 const enter3D = () => {
-  router.push('/3d-shop-pages/show-area')
+  router.push('/show-area')
 }
 onMounted(() => {
   getMyHomePage()

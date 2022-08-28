@@ -46,7 +46,7 @@ const current = ref([])
 const clickMenu = (val) => {
   console.log(val)
   if (val.key === 'logo') {
-    router.push('/3d-shop-pages/home')
+    router.push('/home')
   }
 }
 const onSearch = () => {
