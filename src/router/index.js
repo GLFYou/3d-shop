@@ -5,16 +5,16 @@ const ShowArea = () => import('@/views/show-area/index.vue')
 
 const routes = [
   {
-    path: '/3d-shop',
+    path: '/3d-shop-pages',
     component: Layout,
-    redirect: '/home',
+    redirect: '/3d-shop-pages/home',
     children: [
       {
-        path: '/home',
+        path: '/3d-shop-pages/home',
         component: Home
       },
       {
-        path: '/show-area',
+        path: '/3d-shop-pages/show-area',
         component: ShowArea
       }
     ]

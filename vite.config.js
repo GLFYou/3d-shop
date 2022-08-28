@@ -11,9 +11,9 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
-  const env = loadEnv(mode, process.cwd())
+  // const env = loadEnv(mode, process.cwd())
   return {
-    base: '/3d-shop/',
+    base: '/3d-shop-pages/',
     plugins: [
       vue(),
       AutoImport({
@@ -50,18 +50,18 @@ export default defineConfig(({ mode, command }) => {
       // }
     },
     server: {
-      proxy: {
-        '/apis/': {
-          target: env.VITE_baseURL,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/apis/, '')
-        },
-        '/my-api/': {
-          target: env.VITE_baseURL2,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/my-api/, '')
-        }
-      }
+      // proxy: {
+      //   '/apis/': {
+      //     target: env.VITE_baseURL,
+      //     changeOrigin: true,
+      //     rewrite: (path) => path.replace(/^\/apis/, '')
+      //   },
+      //   '/my-api/': {
+      //     target: env.VITE_baseURL2,
+      //     changeOrigin: true,
+      //     rewrite: (path) => path.replace(/^\/my-api/, '')
+      //   }
+      // }
     }
     // rollupOptions: {
     //   plugins: [

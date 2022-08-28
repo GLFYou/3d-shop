@@ -6,15 +6,15 @@
   </div>
 </template>
 <script setup>
-import { getHomePage } from '@/apis/home.js'
+// import { getHomePage } from '@/apis/home.js'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const slideshowArr = ref([])
 const slideBgc = ref('')
 const getMyHomePage = async () => {
-  const res = await getHomePage()
-  console.log(res)
+  // const res = await getHomePage()
+  // console.log(res)
   // slideshowArr.value = res.banner
   slideshowArr.value = [
     {
@@ -48,7 +48,7 @@ const emitBgc = (val) => {
 }
 
 const enter3D = () => {
-  router.push('/show-area')
+  router.push('/3d-shop-pages/show-area')
 }
 onMounted(() => {
   getMyHomePage()

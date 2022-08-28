@@ -77,7 +77,8 @@ class Base3d {
   setModel(name) {
     return new Promise((resolve, reject) => {
       // const loader = new GLTFLoader().setPath('files/gltf/')
-      const loader = new GLTFLoader().setPath('my-api/models/shop3d/')
+      // const loader = new GLTFLoader().setPath('http://www.glfy.site/images/models/shop3d/')
+      const loader = new GLTFLoader()
       loader.load(name, (gltf) => {
         this.model = gltf.scene.children[0]
         // 让模型中心位于场景中心
@@ -119,7 +120,8 @@ class Base3d {
   }
 
   addMesh() {
-    this.setModel('GUCCI-bag.glb')
+    // this.setModel('GUCCI-bag.glb')
+    this.setModel('http://www.glfy.site/images/models/shop3d/GUCCI-bag.glb')
   }
 
   onWindowsResize() {

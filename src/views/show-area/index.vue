@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup>
-import { getProducts } from '@/apis/home.js'
+// import { getProducts } from '@/apis/home.js'
 import { productStore } from '@/store/product.js'
 import { storeToRefs } from 'pinia'
 import { CrownOutlined, SwapOutlined, SketchOutlined } from '@ant-design/icons-vue'
@@ -31,17 +31,17 @@ const store = productStore()
 const hdrArr = ref([])
 const goodsArr = ref([])
 const goodsArr2 = [
-  { title: 'GUCCI 新款女包', price: 17899, imgsrc: 'my-api/models/shop3d/model-img/GUCCI-bag.png', modelPath: 'GUCCI-bag.glb' },
-  { title: '限量 水晶高跟鞋', price: 6599, imgsrc: 'my-api/models/shop3d/model-img/high-heeled-shoes.png', modelPath: 'high-heeled-shoes.glb' }
+  { title: 'GUCCI 新款女包', price: 17899, imgsrc: 'http://www.glfy.site/images/models/shop3d/model-img/GUCCI-bag.png', modelPath: 'GUCCI-bag.glb' },
+  { title: '限量 水晶高跟鞋', price: 6599, imgsrc: 'http://www.glfy.site/images/models/shop3d/model-img/high-heeled-shoes.png', modelPath: 'high-heeled-shoes.glb' }
 ]
 const activeModel = ref(0)
 const activeScene = ref(0)
 const { isFullscreen } = storeToRefs(store)
 const getMyPro = async () => {
-  const res = await getProducts()
-  console.log(res)
-  hdrArr.value = res.hdr
-  goodsArr.value = res.list
+  // const res = await getProducts()
+  // console.log(res)
+  // hdrArr.value = res.hdr
+  // goodsArr.value = res.list
 }
 
 const changeModel = (name, index) => {
