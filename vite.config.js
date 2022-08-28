@@ -10,7 +10,7 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
   return {
-    base: './',
+    base: 'https://glfyou.github.io/',
     plugins: [
       vue(),
       AutoImport({
