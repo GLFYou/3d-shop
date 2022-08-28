@@ -6,14 +6,14 @@ import path from 'path'
 import Components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
-import commonjs from 'rollup-plugin-commonjs'
-import externalGlobals from 'rollup-plugin-external-globals'
+// import commonjs from 'rollup-plugin-commonjs'
+// import externalGlobals from 'rollup-plugin-external-globals'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
   return {
-    base: 'https://glfyou.github.io/',
+    base: '/3d-shop/',
     plugins: [
       vue(),
       AutoImport({
@@ -62,22 +62,22 @@ export default defineConfig(({ mode, command }) => {
           rewrite: (path) => path.replace(/^\/my-api/, '')
         }
       }
-    },
-    rollupOptions: {
-      plugins: [
-        commonjs(),
-        externalGlobals({
-          vue: 'Vue',
-          'vue-router': 'VueRouter'
-        })
-      ],
-      output: {
-        format: 'es',
-        globals: {
-          vue: 'Vue',
-          'vue-router': 'VueRouter'
-        }
-      }
     }
+    // rollupOptions: {
+    //   plugins: [
+    //     commonjs(),
+    //     externalGlobals({
+    //       vue: 'Vue',
+    //       'vue-router': 'VueRouter'
+    //     })
+    //   ],
+    //   output: {
+    //     format: 'es',
+    //     globals: {
+    //       vue: 'Vue',
+    //       'vue-router': 'VueRouter'
+    //     }
+    //   }
+    // }
   }
 })
