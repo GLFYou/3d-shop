@@ -1,10 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
-// const Layout = () => import('@/views/layout.vue')
-// const Home = () => import('@/views/home/index.vue')
-// const ShowArea = () => import('@/views/show-area/index.vue')
-import Layout from '@/views/layout.vue'
-import Home from '@/views/home/index.vue'
-import ShowArea from '@/views/show-area/index.vue'
+import { createRouter, createWebHashHistory } from 'vue-router'
+const Layout = () => import('@/views/layout.vue')
+const Home = () => import('@/views/home/index.vue')
+const ShowArea = () => import('@/views/show-area/index.vue')
+// import Layout from '@/views/layout.vue'
+// import Home from '@/views/home/index.vue'
+// import ShowArea from '@/views/show-area/index.vue'
 
 const routes = [
   {
@@ -26,7 +26,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_base),
+  history: createWebHashHistory(),
   routes
 })
 
