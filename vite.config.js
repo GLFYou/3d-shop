@@ -11,9 +11,9 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
-  // const env = loadEnv(mode, process.cwd())
+  const env = loadEnv(mode, process.cwd())
   return {
-    // base: '/3d-shop-pages/',
+    base: env.VITE_base,
     plugins: [
       vue(),
       AutoImport({
@@ -48,6 +48,15 @@ export default defineConfig(({ mode, command }) => {
       //     }
       //   }
       // }
+    },
+    build: {
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+      }
     },
     server: {
       // proxy: {

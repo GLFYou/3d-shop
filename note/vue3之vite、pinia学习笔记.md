@@ -655,6 +655,35 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
     ]
 ```
 
+## 11. vite配置项详解
+### 11.1 base
+开发或生产环境服务的公共基础路径。
+
+开发环境和生产环境的配置不同
+
+合法值:
+
+1. 绝对 URL 路径名，例如 /foo/
+2. 完整的 URL，例如 https://foo.com/
+3. 空字符串或 ./（用于开发环境）
+
+### 11.2 生产环境移除console.log
+vite.config.js中
+```javascript
+build: {
+  minify: 'terser',
+  terserOptions: {
+    compress: {
+      drop_console: true,
+      drop_debugger: true
+    }
+  }
+},
+```
+
+
+
+
 ## 11. GitHub Pages部署静态页面
  1. vite.config.js中,与plugins同级,添加如下
 ```javascript

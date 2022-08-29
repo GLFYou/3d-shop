@@ -52,6 +52,7 @@ const enter3D = () => {
 }
 onMounted(() => {
   getMyHomePage()
+  console.log('123qweqwes')
 })
 </script>
 
