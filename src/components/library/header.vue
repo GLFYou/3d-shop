@@ -2,7 +2,7 @@
   <div class="header-container" :class="{ hidden: store.isFullscreen }">
     <a-menu class="menu" v-model:selectedKeys="current" mode="horizontal" :selectable="false" @click="clickMenu">
       <a-menu-item class="logoItem" key="logo"><Logo class="logo"></Logo> </a-menu-item>
-      <a-menu-item class="searchItem" key="mail"><a-input-search class="search" v-model:value="searchVal" placeholder="搜索商品" size="default" @search="onSearch" /> </a-menu-item>
+      <a-menu-item class="searchItem" key="mail"><a-input-search class="search" v-model:value="searchVal" placeholder="搜索商品(这是一个假搜索)" size="default" @search="onSearch" /> </a-menu-item>
       <a-sub-menu key="sub1">
         <template #title
           ><shop-outlined />
@@ -35,18 +35,27 @@
 </template>
 <script setup>
 import Logo from '@/components/library/logo.vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { UserOutlined, ShopOutlined, ShoppingCartOutlined, QuestionCircleOutlined } from '@ant-design/icons-vue'
 import { productStore } from '@/store/product.js'
+import { Modal } from 'ant-design-vue'
 
 const store = productStore()
 const router = useRouter()
+const route = useRoute()
 const searchVal = ref('')
 const current = ref([])
 const clickMenu = (val) => {
   console.log(val)
   if (val.key === 'logo') {
     router.push('/home')
+  }
+  if (val.key === 'help' && route.path === '/show-area') {
+    Modal.info({
+      title: '提示',
+      content: h('div', {}, [h('p', '左侧选择产品，右侧选择场景；'), h('p', '鼠标左键双击开启、关闭全屏；'), h('p', '鼠标左键旋转，右键移动，上下滚轮缩放。')]),
+      okText: '了解'
+    })
   }
 }
 const onSearch = () => {
@@ -64,7 +73,7 @@ const onSearch = () => {
   z-index: 100;
   transition: all 0.5s;
   &.hidden {
-    transform: translateY(-100%);
+    transform: translateY(-102%);
   }
   .Logo {
     margin: 0 20px;
@@ -73,14 +82,14 @@ const onSearch = () => {
     vertical-align: middle;
     margin-left: 5vw;
     margin-right: 5vw;
-    width: 30vw;
+    width: 45vw;
   }
   .shop,
   .cart,
   .account,
   .help {
     display: inline-block;
-    width: 5vw;
+    width: 3vw;
     text-align: center;
   }
 }

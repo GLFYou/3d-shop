@@ -9,6 +9,9 @@ class Base3d {
     this.camera = null
     this.scene = null
     this.renderer = null
+    // this.loadingModel = null
+    // this.loadingHdr = null
+
     // this.controls = null
     // this.model = null
     // this.panzi = null
@@ -20,21 +23,45 @@ class Base3d {
   init() {
     this.initScene() // 初始化场景
     this.initCamera() // 初始化相机
+    this.initManager() // 初始化加载管理器
     this.initRenderer() // 初始化渲染器
     this.initControls() // 初始化控制器
-    this.addMesh() // 添加控制器
+    // this.addMesh() // 初始化添加物体
+    this.setModel('GUCCI-bag.glb', 1)
+
     // this.addAxesHelper()
   }
 
   initScene() {
     this.scene = new THREE.Scene()
-    this.setEnvMap('000')
+    this.setEnvMap('000.hdr')
   }
 
   initCamera() {
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.001, 1000)
     this.camera.position.set(-1.8, 1, 2.7)
     // this.camera.setFocalLength(100)
+  }
+
+  initManager() {
+    this.modelManager = new THREE.LoadingManager()
+    this.hdrManager = new THREE.LoadingManager()
+
+    // this.modelManager.onProgress = () => {
+    //   this.loadingModel = true
+    // }
+    // this.modelManager.onLoad = () => {
+    //   this.loadingModel = false
+    //   console.log('modelL', this.loadingModel)
+    // }
+
+    // this.hdrManager.onProgress = () => {
+    //   this.loadingHdr = true
+    // }
+    // this.hdrManager.onLoad = () => {
+    //   this.loadingHdr = false
+    //   console.log('hdrL', this.loadingHdr)
+    // }
   }
 
   initRenderer() {
@@ -48,10 +75,16 @@ class Base3d {
   }
 
   setEnvMap(hdr) {
-    new RGBELoader().setPath('./files/hdr/').load(`${hdr}.hdr`, (texture) => {
+    if (this.loadingHdr) return
+    this.loadingHdr = true
+    if (this.scene.background === null) {
+      this.loadingHdr = false
+    }
+    new RGBELoader().setPath('http://www.glfy.site/images/models/shop3d/hdr/').load(hdr, (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping
       this.scene.background = texture
       this.scene.environment = texture
+      this.loadingHdr = false
     })
   }
 
@@ -71,15 +104,28 @@ class Base3d {
     this.controls.dampingFactor = 0.6
     this.controls.autoRotate = true
     this.controls.autoRotateSpeed = 2
+    this.controls.minDistance = 2
+    this.controls.maxDistance = 10
   }
 
   // 加载模型
-  setModel(name) {
+  setModel(name, scale) {
+    if (this.loadingModel) return
+    this.loadingModel = true
+    if (this.scene.children.length === 0) {
+      this.loadingModel = false
+    }
     return new Promise((resolve, reject) => {
       // const loader = new GLTFLoader().setPath('files/gltf/')
-      // const loader = new GLTFLoader().setPath('http://www.glfy.site/images/models/shop3d/')
       const loader = new GLTFLoader()
+      loader.setPath('http://www.glfy.site/images/models/shop3d/model/')
       loader.load(name, (gltf) => {
+        if (this.scene.children.length) {
+          //   this.scene.children.forEach((item) => {
+          //     this.scene.remove(item)
+          //   })
+          this.scene.remove(this.scene.children[0])
+        }
         this.model = gltf.scene.children[0]
         // 让模型中心位于场景中心
         // const box3 = new THREE.Box3()
@@ -90,39 +136,28 @@ class Base3d {
         // this.model.position.y = this.model.position.y - center.y
         // this.model.position.z = this.model.position.z - center.z
 
-        // this.model.scale.set(0.1, 0.1, 0.1)// 乔丹1
-        // this.model.scale.set(0.1, 0.1, 0.1)// 浮空车
-        // this.model.scale.set(0.5, 0.5, 0.5) // 可爱电脑
-        // this.model.scale.set(1, 1, 1) // gucci
-        // this.model.scale.set(1, 1, 1) // 高跟
-        // this.model.scale.set(0.2, 0.2, 0.2 ) // new balance
+        this.model.scale.set(scale, scale, scale)
+        // this.model.scale.set(0.1, 0.1, 0.1)// aj1
+        // this.model.scale.set(0.5, 0.5, 0.5) // 可爱电脑，帕加尼
+        // this.model.scale.set(1, 1, 1) // gucci，高跟
+        // this.model.scale.set(1.5, 1.5, 1.5) // 电动车，自行车
         // this.model.scale.set(0.2, 0.2, 0.2) // 手办
         // this.model.scale.set(0.01, 0.01, 0.01) // 赛博电脑
         // 模型加载进场景中时，会把gltf.scene.children的子项移动到this.scene.children中
+        // if (this.scene.children.length) {
+        //   this.scene.remove(this.model)
+        // }
+        this.loadingModel = false
         this.scene.add(this.model)
         resolve('模型加载成功!')
-        // if ((name === 'bag2.glb') & !this.panzi) {
-        //   this.panzi = gltf.scene.children[5]
-        //   // this.scene.add(this.panzi)
-        //   this.scene.add(gltf.scene)
-        //   // 修改摄像头为模型摄像头
-        //   this.camera = gltf.cameras[0]
-        //   // 调动动画
-        //   this.mixer = new THREE.AnimationMixer(this.camera)
-        //   this.AnimationMixer = this.mixer.clipAction(gltf.animations[0])
-        //   // 设置播放动画时长、次数
-        //   this.animateAction.setDuration(20).setLoop(THREE.LoopOnce)
-        //   // 播放完后停止
-        //   this.animateAction.clampWhenFinished = true
-        // }
       })
     })
   }
 
-  addMesh() {
-    // this.setModel('GUCCI-bag.glb')
-    this.setModel('http://www.glfy.site/images/models/shop3d/GUCCI-bag.glb')
-  }
+  // addMesh() {
+  //   this.setModel('GUCCI-bag.glb')
+  //   // this.setModel('http://www.glfy.site/images/models/shop3d/GUCCI-bag.glb')
+  // }
 
   onWindowsResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight

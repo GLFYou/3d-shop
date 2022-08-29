@@ -22,12 +22,12 @@
 
 src>router>index.js:
 ```javascript
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = []
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 })
 
@@ -667,6 +667,8 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 2. 完整的 URL，例如 https://foo.com/
 3. 空字符串或 ./（用于开发环境）
 
+一般开发时要把base改成'./'
+
 ### 11.2 生产环境移除console.log
 vite.config.js中
 ```javascript
@@ -680,6 +682,7 @@ build: {
   }
 },
 ```
+terser需要另外安装,不然可能会报错,因为默认使用的压缩为esbuild
 
 
 

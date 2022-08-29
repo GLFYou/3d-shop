@@ -3,7 +3,10 @@ import { defineStore } from 'pinia'
 export const productStore = defineStore('product', {
   state: () => {
     return {
-      isFullscreen: false
+      isFullscreen: false,
+      isLoadingHdr: false,
+      isLoadingModel: false,
+      clickMenu: ''
     }
   },
   getters: {},

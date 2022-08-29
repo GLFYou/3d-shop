@@ -1,23 +1,23 @@
 <template>
-  <div class="show-area-container">
+  <div class="show-area-container" :class="{ hidden: isFullscreen }">
     <div class="leftView" :class="{ hidden: isFullscreen }">
       <div class="title"><crown-outlined /> 产品展示</div>
-      <div class="goodsItem" v-for="(item, index) in goodsArr2" :key="index" @click="changeModel(item.modelName, index)">
-        <img :src="item.imgsrc" alt="" />
+      <div class="goodsItem" v-for="(item, index) in goodsArr" :key="index" @click="changeModel(index)">
+        <img :src="item.imgSrc" alt="" />
         <div class="goodsName">{{ item.title }}</div>
         <div class="goodsPrice">￥{{ item.price }}</div>
         <div class="selected" :class="{ active: activeModel === index }"><sketch-outlined /></div>
       </div>
     </div>
-    <!-- <div class="rightView" :class="{ hidden: isFullscreen }">
+    <div class="rightView" :class="{ hidden: isFullscreen }">
       <div class="title"><swap-outlined /> 场景切换</div>
-      <div class="sceneItem" v-for="(item, index) in hdrArr" :key="index" @click="changeScene(item, index)">
-        <img :src="`./files/hdr/${item}.jpg`" alt="" />
-        <div class="selected" :class="{ active: activeScene === index }"><sketch-outlined /></div>
+      <div class="sceneItem" v-for="(item, index) in hdrArr" :key="index" @click="changeScene(index)">
+        <img :src="item.imgSrc" alt="" />
+        <div class="selected" :class="{ active: activeHdr === index }"><sketch-outlined /></div>
       </div>
-    </div> -->
+    </div>
     <!-- <div class="threeBox">3dbox</div> -->
-    <Scene3d></Scene3d>
+    <Scene3d :activeModel="goodsArr[activeModel].modelPath" :scale="goodsArr[activeModel].scale" :activeHdr="hdrArr[activeHdr].hdrSrc"></Scene3d>
   </div>
 </template>
 <script setup>
@@ -27,36 +27,60 @@ import { storeToRefs } from 'pinia'
 import { CrownOutlined, SwapOutlined, SketchOutlined } from '@ant-design/icons-vue'
 import { Modal } from 'ant-design-vue'
 
+const hdrImgURL = 'http://www.glfy.site/images/models/shop3d/hdr/'
+const modelImgURL = 'http://www.glfy.site/images/models/shop3d/model-img/'
 const store = productStore()
-const hdrArr = ref([])
-const goodsArr = ref([])
-const goodsArr2 = [
-  { title: 'GUCCI 新款女包', price: 17899, imgsrc: 'http://www.glfy.site/images/models/shop3d/model-img/GUCCI-bag.png', modelPath: 'GUCCI-bag.glb' },
-  { title: '限量 水晶高跟鞋', price: 6599, imgsrc: 'http://www.glfy.site/images/models/shop3d/model-img/high-heeled-shoes.png', modelPath: 'high-heeled-shoes.glb' }
-]
 const activeModel = ref(0)
-const activeScene = ref(0)
-const { isFullscreen } = storeToRefs(store)
-const getMyPro = async () => {
-  // const res = await getProducts()
-  // console.log(res)
-  // hdrArr.value = res.hdr
-  // goodsArr.value = res.list
-}
+const activeHdr = ref(0)
+const { isFullscreen, isLoadingModel, isLoadingHdr } = storeToRefs(store)
+const goodsArr = [
+  { title: 'GUCCI 新款女包', price: '1.78w', imgSrc: modelImgURL + 'GUCCI-bag.png', modelPath: 'GUCCI-bag.glb', scale: 1 },
+  { title: '镶钻高跟鞋 限量精品', price: 6599, imgSrc: modelImgURL + 'high-heeled-shoes.png', modelPath: 'high-heeled-shoes.glb', scale: 0.008 },
+  // { title: '雷电 风驰电掣', price: 4999999, imgSrc: modelImgURL + 'high-heeled-shoes.png', modelPath: 'thunder-hypercar.glb' },
+  { title: '兰博基尼 卓越非凡', price: '850w', imgSrc: modelImgURL + 'lamborghini.png', modelPath: 'lamborghini.glb', scale: 1.7 },
+  { title: '帕加尼 极致性能', price: '3000w', imgSrc: modelImgURL + 'pagani-car.png', modelPath: 'pagani-car.glb', scale: 0.6 },
+  { title: '六神电驴 安全平稳', price: 3800, imgSrc: modelImgURL + 'electrocar.png', modelPath: 'electrocar.glb', scale: 1.8 },
+  { title: '山地自行车 为运动而生', price: '3.5w', imgSrc: modelImgURL + 'frame-bike.png', modelPath: 'frame-bike.glb', scale: 1.2 },
+  { title: '电脑桌面 艺术摆件', price: 1516, imgSrc: modelImgURL + 'cute-computer.png', modelPath: 'cute-computer.glb', scale: 0.5 },
+  { title: 'AJ1 引领潮流', price: 1599, imgSrc: modelImgURL + 'air-jordan1.png', modelPath: 'air-jordan1.glb', scale: 0.05 },
+  // { title: 'NewBalance', price: 1099, imgSrc: modelImgURL + 'high-heeled-shoes.png', modelPath: 'new-balance.glb' },
+  { title: '可爱手办 室内摆件', price: 366, imgSrc: modelImgURL + 'handmade-model.png', modelPath: 'handmade-model.glb', scale: 0.2 },
+  { title: '赛博出品 豪华游戏本', price: '4.6w', imgSrc: modelImgURL + 'cyberpunk_laptop_concept_design.png', modelPath: 'cyberpunk_laptop_concept_design.glb', scale: 0.008 }
+]
+const hdrArr = [
+  { hdrSrc: '000.hdr', imgSrc: hdrImgURL + '000.jpg' },
+  { hdrSrc: '079.hdr', imgSrc: hdrImgURL + '079.jpg' },
+  { hdrSrc: '029.hdr', imgSrc: hdrImgURL + '029.jpg' },
+  { hdrSrc: '039.hdr', imgSrc: hdrImgURL + '039.jpg' },
+  { hdrSrc: '044.hdr', imgSrc: hdrImgURL + '044.jpg' },
+  { hdrSrc: '050.hdr', imgSrc: hdrImgURL + '050.jpg' },
+  { hdrSrc: '052.hdr', imgSrc: hdrImgURL + '052.jpg' },
+  { hdrSrc: '067.hdr', imgSrc: hdrImgURL + '067.jpg' },
+  { hdrSrc: '068.hdr', imgSrc: hdrImgURL + '068.jpg' },
+  { hdrSrc: '076.hdr', imgSrc: hdrImgURL + '076.jpg' },
+  { hdrSrc: '078.hdr', imgSrc: hdrImgURL + '078.jpg' }
+  // { hdrSrc: '077.hdr', imgSrc: hdrImgURL + '077.jpg' },
+  // { hdrSrc: '080.hdr', imgSrc: hdrImgURL + '080.jpg' }
+]
 
-const changeModel = (name, index) => {
+// const getMyPro = async () => {
+//   // const res = await getProducts()
+//   // console.log(res)
+//   // hdrArr.value = res.hdr
+//   // goodsArr.value = res.list
+// }
+
+const changeModel = (index) => {
+  console.log(isLoadingModel.value)
+  if (isLoadingModel.value) return
   activeModel.value = index
 }
-const changeScene = (name, index) => {
-  activeScene.value = index
+const changeScene = (index) => {
+  if (isLoadingHdr.value) return
+  activeHdr.value = index
 }
 
 const doubleClickFn = (e) => {
-  // if (e.deltaY > 0) {
-  //   isFullscreen.value = true
-  // } else {
-  //   isFullscreen.value = false
-  // }
   isFullscreen.value = !isFullscreen.value
 }
 
@@ -64,19 +88,19 @@ const tipFn = () => {
   const modal = Modal.info({
     title: '提示',
     // content: '左侧选择展示的产品，右侧选择场景；\r\n滚轮向下开启全屏并查看产品，滚轮向上关闭全屏。',
-    content: h('div', {}, [h('p', '左侧选择产品，右侧选择场景；'), h('p', '滚轮向下 ↓ 开启全屏并查看产品，滚轮向上 ↑ 关闭全屏。')]),
+    content: h('div', {}, [h('p', '左侧选择产品，右侧选择场景；'), h('p', '鼠标左键双击开启、关闭全屏；'), h('p', '鼠标左键旋转，右键移动，上下滚轮缩放。')]),
     okText: '了解'
   })
-  let timer = null
-  clearTimeout(timer)
-  timer = setTimeout(() => {
-    clearTimeout(timer)
-    modal.destroy()
-  }, 20000)
+  // let timer = null
+  // clearTimeout(timer)
+  // timer = setTimeout(() => {
+  //   clearTimeout(timer)
+  //   modal.destroy()
+  // }, 20000)
 }
 onMounted(() => {
-  getMyPro()
-  // tipFn()
+  // getMyPro()
+  tipFn()
   window.addEventListener('dblclick', doubleClickFn)
 })
 onBeforeUnmount(() => {
@@ -88,28 +112,37 @@ onBeforeUnmount(() => {
 .show-area-container {
   width: 100vw;
   height: calc(100vh - 46px);
-  $item-margin: 15px;
+  $item-margin: 10px;
+  overflow-y: hidden;
+  transition: all 0.5s;
+  &.hidden {
+    height: 100vh;
+  }
 
   .leftView,
   .rightView {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-evenly;
-    align-items: center;
+    // display: flex;
+    // flex-flow: column nowrap;
+    // justify-content: space-evenly;
+    // align-items: center;
+    @include scrollbar;
     position: fixed;
     top: 0;
     padding-top: 46px;
     height: 100%;
     width: 40vw;
     max-width: 200px;
-    background-color: rgba(189, 189, 189, 0.42);
+    background-color: rgba(255, 255, 255, 0.5);
     z-index: 2;
     transition: all 0.5s;
     backdrop-filter: blur(10px);
+    overflow-y: auto;
     .title {
       // background-color: #fff;
       margin-top: $item-margin;
       font-size: 20px;
+      text-align: center;
+      text-shadow: 0 0 30px #fff;
     }
     .selected {
       position: absolute;
@@ -136,7 +169,8 @@ onBeforeUnmount(() => {
       position: relative;
       margin: $item-margin;
       margin-bottom: 0;
-      flex: 1;
+      width: auto;
+      // flex: 1;
       overflow: hidden;
       box-shadow: 0 0 5px 0 rgba(99, 99, 99, 0.594);
       cursor: pointer;
@@ -163,7 +197,7 @@ onBeforeUnmount(() => {
         font-size: 18px;
         height: 20%;
         vertical-align: middle;
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.5);
         backdrop-filter: blur(5px);
         transition: all 0.3s;
         border-radius: 30px;

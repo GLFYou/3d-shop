@@ -1,7 +1,7 @@
 <template>
-  <div class="holder" v-show="!store.isFullscreen"></div>
-  <div class="holder" v-show="false"></div>
+  <div class="holder" :class="{ hidden: store.isFullscreen }"></div>
   <Header></Header>
+  <Loading></Loading>
   <router-view></router-view>
 </template>
 <script setup>
@@ -18,5 +18,9 @@ const store = productStore()
 <style scoped lang="scss">
 .holder {
   height: 46px;
+  transition: all 0.5s;
+  &.hidden {
+    height: 0px;
+  }
 }
 </style>
