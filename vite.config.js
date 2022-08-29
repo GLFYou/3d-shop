@@ -50,7 +50,7 @@ export default defineConfig(({ mode, command }) => {
       // }
     },
     build: {
-      minify: 'terser',
+      // minify: 'terser',
       terserOptions: {
         compress: {
           drop_console: true,
