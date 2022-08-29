@@ -34,13 +34,13 @@ const activeModel = ref(0)
 const activeHdr = ref(0)
 const { isFullscreen, isLoadingModel, isLoadingHdr } = storeToRefs(store)
 const goodsArr = [
-  { title: 'GUCCI 新款女包', price: '1.78w', imgSrc: modelImgURL + 'GUCCI-bag.png', modelPath: 'GUCCI-bag.glb', scale: 1 },
-  { title: '镶钻高跟鞋 限量精品', price: 6599, imgSrc: modelImgURL + 'high-heeled-shoes.png', modelPath: 'high-heeled-shoes.glb', scale: 0.008 },
+  { title: 'GUCCI新品 包涵优雅', price: '1.78w', imgSrc: modelImgURL + 'GUCCI-bag.png', modelPath: 'GUCCI-bag.glb', scale: 1 },
+  { title: '水晶高跟鞋 细致于型', price: 6599, imgSrc: modelImgURL + 'high-heeled-shoes.png', modelPath: 'high-heeled-shoes.glb', scale: 0.008 },
   // { title: '雷电 风驰电掣', price: 4999999, imgSrc: modelImgURL + 'high-heeled-shoes.png', modelPath: 'thunder-hypercar.glb' },
   { title: '兰博基尼 卓越非凡', price: '850w', imgSrc: modelImgURL + 'lamborghini.png', modelPath: 'lamborghini.glb', scale: 1.7 },
   { title: '帕加尼 极致性能', price: '3000w', imgSrc: modelImgURL + 'pagani-car.png', modelPath: 'pagani-car.glb', scale: 0.6 },
   { title: '六神电驴 安全平稳', price: 3800, imgSrc: modelImgURL + 'electrocar.png', modelPath: 'electrocar.glb', scale: 1.8 },
-  { title: '山地自行车 为运动而生', price: '3.5w', imgSrc: modelImgURL + 'frame-bike.png', modelPath: 'frame-bike.glb', scale: 1.2 },
+  { title: '山地车 为运动而生', price: '3.5w', imgSrc: modelImgURL + 'frame-bike.png', modelPath: 'frame-bike.glb', scale: 1.2 },
   { title: '电脑桌面 艺术摆件', price: 1516, imgSrc: modelImgURL + 'cute-computer.png', modelPath: 'cute-computer.glb', scale: 0.5 },
   { title: 'AJ1 引领潮流', price: 1599, imgSrc: modelImgURL + 'air-jordan1.png', modelPath: 'air-jordan1.glb', scale: 0.05 },
   // { title: 'NewBalance', price: 1099, imgSrc: modelImgURL + 'high-heeled-shoes.png', modelPath: 'new-balance.glb' },
@@ -71,7 +71,6 @@ const hdrArr = [
 // }
 
 const changeModel = (index) => {
-  console.log(isLoadingModel.value)
   if (isLoadingModel.value) return
   activeModel.value = index
 }

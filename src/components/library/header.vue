@@ -46,7 +46,6 @@ const route = useRoute()
 const searchVal = ref('')
 const current = ref([])
 const clickMenu = (val) => {
-  console.log(val)
   if (val.key === 'logo') {
     router.push('/home')
   }
@@ -59,7 +58,7 @@ const clickMenu = (val) => {
   }
 }
 const onSearch = () => {
-  console.log(searchVal.value)
+  // console.log(searchVal.value)
 }
 </script>
 

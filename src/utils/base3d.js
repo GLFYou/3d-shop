@@ -9,9 +9,8 @@ class Base3d {
     this.camera = null
     this.scene = null
     this.renderer = null
-    // this.loadingModel = null
-    // this.loadingHdr = null
-
+    // this.loadingModel = false
+    // this.loadingHdr = false
     // this.controls = null
     // this.model = null
     // this.panzi = null
@@ -27,14 +26,14 @@ class Base3d {
     this.initRenderer() // 初始化渲染器
     this.initControls() // 初始化控制器
     // this.addMesh() // 初始化添加物体
-    this.setModel('GUCCI-bag.glb', 1)
+    // this.setModel('GUCCI-bag.glb', 1)
 
     // this.addAxesHelper()
   }
 
   initScene() {
     this.scene = new THREE.Scene()
-    this.setEnvMap('000.hdr')
+    // this.setEnvMap('000.hdr')
   }
 
   initCamera() {
@@ -75,11 +74,19 @@ class Base3d {
   }
 
   setEnvMap(hdr) {
+    const that = this
     if (this.loadingHdr) return
     this.loadingHdr = true
-    if (this.scene.background === null) {
-      this.loadingHdr = false
-    }
+    // if (this.scene.background === null) {
+    //   const timer = setInterval(() => {
+    //     console.log(this.scene.background)
+    //     console.log(this.loadingHdr)
+    //     if (this.scene.background !== null) {
+    //       // this.loadingHdr = false
+    //       // clearInterval(timer)
+    //     }
+    //   }, 1000)
+    // }
     new RGBELoader().setPath('http://www.glfy.site/images/models/shop3d/hdr/').load(hdr, (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping
       this.scene.background = texture
@@ -112,9 +119,14 @@ class Base3d {
   setModel(name, scale) {
     if (this.loadingModel) return
     this.loadingModel = true
-    if (this.scene.children.length === 0) {
-      this.loadingModel = false
-    }
+    // if (this.scene.children.length === 0) {
+    //   const timer = setInterval(function () {
+    //     if (this.scene.children.length) {
+    //       this.loadingModel = false
+    //       clearInterval(timer)
+    //     }
+    //   }, 100)
+    // }
     return new Promise((resolve, reject) => {
       // const loader = new GLTFLoader().setPath('files/gltf/')
       const loader = new GLTFLoader()
@@ -127,6 +139,7 @@ class Base3d {
           this.scene.remove(this.scene.children[0])
         }
         this.model = gltf.scene.children[0]
+        console.log(this.model)
         // 让模型中心位于场景中心
         // const box3 = new THREE.Box3()
         // box3.expandByObject(this.model)
@@ -137,12 +150,6 @@ class Base3d {
         // this.model.position.z = this.model.position.z - center.z
 
         this.model.scale.set(scale, scale, scale)
-        // this.model.scale.set(0.1, 0.1, 0.1)// aj1
-        // this.model.scale.set(0.5, 0.5, 0.5) // 可爱电脑，帕加尼
-        // this.model.scale.set(1, 1, 1) // gucci，高跟
-        // this.model.scale.set(1.5, 1.5, 1.5) // 电动车，自行车
-        // this.model.scale.set(0.2, 0.2, 0.2) // 手办
-        // this.model.scale.set(0.01, 0.01, 0.01) // 赛博电脑
         // 模型加载进场景中时，会把gltf.scene.children的子项移动到this.scene.children中
         // if (this.scene.children.length) {
         //   this.scene.remove(this.model)
