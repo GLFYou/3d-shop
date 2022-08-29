@@ -8,7 +8,6 @@ const ShowArea = () => import('@/views/show-area/index.vue')
 
 const routes = [
   {
-    // path: '/3d-shop-pages',
     path: '/',
     component: Layout,
     redirect: 'home',
