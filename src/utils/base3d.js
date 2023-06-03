@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import * as dat from 'dat.gui'
 
 class Base3d {
   constructor(selector) {
@@ -25,6 +26,7 @@ class Base3d {
     this.initManager() // 初始化加载管理器
     this.initRenderer() // 初始化渲染器
     this.initControls() // 初始化控制器
+    // this.initGui() // 初始化调试器
     // this.addMesh() // 初始化添加物体
     // this.setModel('GUCCI-bag.glb', 1)
 
@@ -63,6 +65,10 @@ class Base3d {
     // }
   }
 
+  // initGui() {
+  //   this.gui = new dat.GUI()
+  // }
+
   initRenderer() {
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.setPixelRatio(window.devicePixelRatio)
@@ -87,7 +93,7 @@ class Base3d {
     //     }
     //   }, 1000)
     // }
-    new RGBELoader().setPath('http://www.glfy.site/images/models/shop3d/hdr/').load(hdr, (texture) => {
+    new RGBELoader().setPath('https://www.glfy.site/images/models/shop3d/hdr/').load(hdr, (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping
       this.scene.background = texture
       this.scene.environment = texture
@@ -130,7 +136,7 @@ class Base3d {
     return new Promise((resolve, reject) => {
       // const loader = new GLTFLoader().setPath('files/gltf/')
       const loader = new GLTFLoader()
-      loader.setPath('http://www.glfy.site/images/models/shop3d/model/')
+      loader.setPath('https://www.glfy.site/images/models/shop3d/model/')
       loader.load(name, (gltf) => {
         if (this.scene.children.length) {
           //   this.scene.children.forEach((item) => {
@@ -150,6 +156,7 @@ class Base3d {
         // this.model.position.z = this.model.position.z - center.z
 
         this.model.scale.set(scale, scale, scale)
+        // this.addGui(this.model)
         // 模型加载进场景中时，会把gltf.scene.children的子项移动到this.scene.children中
         // if (this.scene.children.length) {
         //   this.scene.remove(this.model)
@@ -164,6 +171,14 @@ class Base3d {
   // addMesh() {
   //   this.setModel('GUCCI-bag.glb')
   //   // this.setModel('http://www.glfy.site/images/models/shop3d/GUCCI-bag.glb')
+  // }
+
+  // addGui(model) {
+  //   // gui.add(model.scale)
+  //   const scale = { default: 1 }
+  //   this.gui.add(scale, 'default', 0.001, 10, 0.001).onChange((val) => {
+  //     model.scale.set(val, val, val)
+  //   })
   // }
 
   onWindowsResize() {

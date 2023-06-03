@@ -9,8 +9,8 @@
           <div class="shop">门店</div></template
         >
         <a-menu-item-group title="最新">
-          <a-menu-item key="setting:1">李大福珠宝店</a-menu-item>
-          <a-menu-item key="setting:2">鼓龙香水</a-menu-item>
+          <a-menu-item key="setting:1">路易威登(Louis Vuitton)</a-menu-item>
+          <a-menu-item key="setting:2">芬迪(Fendi)</a-menu-item>
         </a-menu-item-group>
         <a-menu-item-group title="最热">
           <a-menu-item key="setting:3">香奈儿(Chanel)</a-menu-item>

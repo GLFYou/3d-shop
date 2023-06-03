@@ -18,6 +18,7 @@
     </div>
     <!-- <div class="threeBox">3dbox</div> -->
     <Scene3d :activeModel="goodsArr[activeModel].modelPath" :scale="goodsArr[activeModel].scale" :activeHdr="hdrArr[activeHdr].hdrSrc"></Scene3d>
+    <div class="mySkeleton"></div>
   </div>
 </template>
 <script setup>
@@ -27,8 +28,8 @@ import { storeToRefs } from 'pinia'
 import { CrownOutlined, SwapOutlined, SketchOutlined } from '@ant-design/icons-vue'
 import { Modal } from 'ant-design-vue'
 
-const hdrImgURL = 'http://www.glfy.site/images/models/shop3d/hdr/'
-const modelImgURL = 'http://www.glfy.site/images/models/shop3d/model-img/'
+const hdrImgURL = 'https://www.glfy.site/images/models/shop3d/hdr/'
+const modelImgURL = 'https://www.glfy.site/images/models/shop3d/model-img/'
 const store = productStore()
 const activeModel = ref(0)
 const activeHdr = ref(0)
@@ -169,6 +170,9 @@ onBeforeUnmount(() => {
       margin: $item-margin;
       margin-bottom: 0;
       width: auto;
+      height: 30vw;
+      max-height: calc(180px * 3 / 4);
+      // height: 50px;
       // flex: 1;
       overflow: hidden;
       box-shadow: 0 0 5px 0 rgba(99, 99, 99, 0.594);
@@ -223,8 +227,8 @@ onBeforeUnmount(() => {
     .sceneItem {
       // width: 38vw;
       // max-width: 180px;
-      // height: 38vw;
-      // max-height: 180px;
+      height: calc(40vw * 9 / 16);
+      max-height: calc(180px * 9 / 16);
       position: relative;
       overflow: hidden;
       box-shadow: 0 0 5px 0 rgba(99, 99, 99, 0.594);

@@ -51,6 +51,7 @@ export default defineConfig(({ mode, command }) => {
     },
     build: {
       // minify: 'terser',
+      outDir: '3d-shop',
       terserOptions: {
         compress: {
           drop_console: true,

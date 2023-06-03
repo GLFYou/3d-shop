@@ -21,6 +21,7 @@ const { isLoadingModel, isLoadingHdr } = storeToRefs(store)
   height: 100px;
   z-index: 101;
   display: none;
+  user-select: none;
   &.loading {
     display: block;
   }
