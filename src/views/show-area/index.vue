@@ -1,5 +1,6 @@
 <template>
   <div class="show-area-container" :class="{ hidden: isFullscreen }">
+    <!-- 左侧产品切换 -->
     <div class="leftView" :class="{ hidden: isFullscreen }">
       <div class="title"><crown-outlined /> 产品展示</div>
       <div class="goodsItem" v-for="(item, index) in goodsArr" :key="index" @click="changeModel(index)">
@@ -9,6 +10,7 @@
         <div class="selected" :class="{ active: activeModel === index }"><sketch-outlined /></div>
       </div>
     </div>
+    <!-- 右侧场景切换 -->
     <div class="rightView" :class="{ hidden: isFullscreen }">
       <div class="title"><swap-outlined /> 场景切换</div>
       <div class="sceneItem" v-for="(item, index) in hdrArr" :key="index" @click="changeScene(index)">
