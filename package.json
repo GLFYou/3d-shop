@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 8082",
+    "serve": "npm run dev",
     "build-t": "vite build --mode test",
     "build": "vite build",
     "preview": "vite preview"

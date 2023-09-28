@@ -51,7 +51,7 @@ export default defineConfig(({ mode, command }) => {
     },
     build: {
       // minify: 'terser',
-      outDir: '3d-shop',
+      // outDir: '3d-shop',
       terserOptions: {
         compress: {
           drop_console: true,
@@ -60,18 +60,23 @@ export default defineConfig(({ mode, command }) => {
       }
     },
     server: {
-      // proxy: {
-      //   '/apis/': {
-      //     target: env.VITE_baseURL,
-      //     changeOrigin: true,
-      //     rewrite: (path) => path.replace(/^\/apis/, '')
-      //   },
-      //   '/my-api/': {
-      //     target: env.VITE_baseURL2,
-      //     changeOrigin: true,
-      //     rewrite: (path) => path.replace(/^\/my-api/, '')
-      //   }
-      // }
+      proxy: {
+        '/api/': {
+          target: 'https://glfy.site',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+        //   '/apis/': {
+        //     target: env.VITE_baseURL,
+        //     changeOrigin: true,
+        //     rewrite: (path) => path.replace(/^\/apis/, '')
+        //   },
+        //   '/my-api/': {
+        //     target: env.VITE_baseURL2,
+        //     changeOrigin: true,
+        //     rewrite: (path) => path.replace(/^\/my-api/, '')
+        //   }
+      }
     }
     // rollupOptions: {
     //   plugins: [

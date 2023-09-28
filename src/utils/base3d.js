@@ -93,7 +93,7 @@ class Base3d {
     //     }
     //   }, 1000)
     // }
-    new RGBELoader().setPath('https://www.glfy.site/images/models/shop3d/hdr/').load(hdr, (texture) => {
+    new RGBELoader().setPath('api/storage/resource/shop3d/hdr/').load(hdr, (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping
       this.scene.background = texture
       this.scene.environment = texture
@@ -136,7 +136,7 @@ class Base3d {
     return new Promise((resolve, reject) => {
       // const loader = new GLTFLoader().setPath('files/gltf/')
       const loader = new GLTFLoader()
-      loader.setPath('https://www.glfy.site/images/models/shop3d/model/')
+      loader.setPath('api/storage/resource/shop3d/model/')
       loader.load(name, (gltf) => {
         if (this.scene.children.length) {
           //   this.scene.children.forEach((item) => {

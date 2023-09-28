@@ -30,8 +30,8 @@ import { storeToRefs } from 'pinia'
 import { CrownOutlined, SwapOutlined, SketchOutlined } from '@ant-design/icons-vue'
 import { Modal } from 'ant-design-vue'
 
-const hdrImgURL = 'https://www.glfy.site/images/models/shop3d/hdr/'
-const modelImgURL = 'https://www.glfy.site/images/models/shop3d/model-img/'
+const hdrImgURL = 'api/storage/resource/shop3d/hdr/'
+const modelImgURL = 'api/storage/resource/shop3d/model-img/'
 const store = productStore()
 const activeModel = ref(0)
 const activeHdr = ref(0)
